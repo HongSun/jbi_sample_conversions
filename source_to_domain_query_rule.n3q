@@ -1,0 +1,14 @@
+PREFIX schema: <http://schema.org/>
+PREFIX patient: <http://www.agfa.com/orbis-schema/Patient#>
+PREFIX natperson: <http://www.agfa.com/orbis-schema/Natperson#>
+
+    {	
+	?patient a <http://snomed.info/id/116154003>. #Patient
+	?patient a schema:Person. 
+	?patient schema:birthDate ?birthDate.
+	?patient schema:familyName ?familyName.
+     } => {
+	?patient a <http://snomed.info/id/116154003>. #Patient
+	?patient a schema:Person. 
+	?patient schema:birthDate ?birthDate.
+	?patient schema:familyName ?familyName.}.
