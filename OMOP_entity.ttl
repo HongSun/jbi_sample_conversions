@@ -1,0 +1,17 @@
+#Processed by Id: euler.yap 8028 2015-05-07 09:13:19Z josd
+#eye --nope domain_entity.ttl domain_to_OMOP_conversion_rule.n3 --query domain_to_OMOP_query_rule.n3q
+
+PREFIX patient: <http://www.agfa.com/orbis-schema/Patient#>
+PREFIX natperson: <http://www.agfa.com/orbis-schema/Natperson#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://schema.org/>
+PREFIX func: <http://www.w3.org/2007/rif-builtin-function#>
+PREFIX omop: <http://www.salusproject.eu/ontology/omop#>
+PREFIX log: <http://www.w3.org/2000/10/swap/log#>
+
+<http://example.org/resource/Patient/1001> omop:yearOfBirth 1990 .
+<http://example.org/resource/Patient/1001> omop:monthOfBirth 2 .
+<http://example.org/resource/Patient/1001> omop:dayOfBirth 8 .
+
+#ENDS 0.060 [sec] IO=6/3 TC=2 TP=4 BC=0 BP=0 PM=0 CM=0 FM=0 AM=0
+
