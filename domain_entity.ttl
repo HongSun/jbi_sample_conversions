@@ -1,0 +1,15 @@
+#Processed by Id: euler.yap 8028 2015-05-07 09:13:19Z josd
+#eye --nope source_entity.ttl source_to_domain_conversion_rule.n3 --query source_to_domain_query_rule.n3q
+
+PREFIX patient: <http://www.agfa.com/orbis-schema/Patient#>
+PREFIX natperson: <http://www.agfa.com/orbis-schema/Natperson#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://schema.org/>
+
+<http://example.org/resource/Patient/1001> a <http://snomed.info/id/116154003>.
+<http://example.org/resource/Patient/1001> a <http://schema.org/Person>.
+<http://example.org/resource/Patient/1001> <http://schema.org/birthDate> "1990-02-08T00:00:00+01:00"^^xsd:dateTime.
+<http://example.org/resource/Patient/1001> <http://schema.org/familyName> "Healthcare".
+
+#ENDS 0.068 [sec] IO=8/4 TC=4 TP=8 BC=0 BP=0 PM=0 CM=0 FM=0 AM=0
+
