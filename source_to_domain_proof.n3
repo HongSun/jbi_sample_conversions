@@ -1,0 +1,74 @@
+#Processed by Id: euler.yap 8028 2015-05-07 09:13:19Z josd
+#eye source_entity.ttl source_to_domain_conversion_rule.n3 --query source_to_domain_query_rule.n3q
+
+PREFIX patient: <http://www.agfa.com/orbis-schema/Patient#>
+PREFIX natperson: <http://www.agfa.com/orbis-schema/Natperson#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://schema.org/>
+PREFIX r: <http://www.w3.org/2000/10/swap/reason#>
+
+[ a r:Proof, r:Conjunction;
+  r:component <#lemma1>;
+  r:gives {
+    <http://example.org/resource/Patient/1001> a <http://snomed.info/id/116154003>.
+    <http://example.org/resource/Patient/1001> a <http://schema.org/Person>.
+    <http://example.org/resource/Patient/1001> <http://schema.org/birthDate> "1990-02-08T00:00:00+01:00"^^xsd:dateTime.
+    <http://example.org/resource/Patient/1001> <http://schema.org/familyName> "Healthcare".
+  }].
+
+<#lemma1> a r:Inference; r:gives {<http://example.org/resource/Patient/1001> a <http://snomed.info/id/116154003>.
+  <http://example.org/resource/Patient/1001> a <http://schema.org/Person>.
+  <http://example.org/resource/Patient/1001> <http://schema.org/birthDate> "1990-02-08T00:00:00+01:00"^^xsd:dateTime.
+  <http://example.org/resource/Patient/1001> <http://schema.org/familyName> "Healthcare"}; r:evidence (
+  <#lemma2>
+  <#lemma3>
+  <#lemma4>);
+  r:rule <#lemma5>.
+
+<#lemma2> a r:Inference; r:gives {<http://example.org/resource/Patient/1001> a <http://snomed.info/id/116154003>.
+  <http://example.org/resource/Patient/1001> a <http://schema.org/Person>}; r:evidence (
+  <#lemma6>);
+  r:rule <#lemma7>.
+
+<#lemma3> a r:Inference; r:gives {<http://example.org/resource/Patient/1001> <http://schema.org/birthDate> "1990-02-08T00:00:00+01:00"^^xsd:dateTime}; r:evidence (
+  <#lemma6>
+  <#lemma8>);
+  r:rule <#lemma9>.
+
+<#lemma4> a r:Inference; r:gives {<http://example.org/resource/Patient/1001> <http://schema.org/familyName> "Healthcare"}; r:evidence (
+  <#lemma6>
+  <#lemma10>);
+  r:rule <#lemma11>.
+
+<#lemma5> a r:Extraction; r:gives {{?x0 a <http://snomed.info/id/116154003>.
+  ?x0 a <http://schema.org/Person>.
+  ?x0 <http://schema.org/birthDate> ?x1.
+  ?x0 <http://schema.org/familyName> ?x2} => {?x0 a <http://snomed.info/id/116154003>.
+  ?x0 a <http://schema.org/Person>.
+  ?x0 <http://schema.org/birthDate> ?x1.
+  ?x0 <http://schema.org/familyName> ?x2}};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/source_to_domain_query_rule.n3q>].
+
+<#lemma6> a r:Extraction; r:gives {<http://example.org/resource/Patient/1001> patient:persnr <http://example.org/resource/Natperson/1001>};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/source_entity.ttl>].
+
+<#lemma7> a r:Extraction; r:gives {{?x0 patient:persnr ?x1} => {?x0 a <http://snomed.info/id/116154003>.
+  ?x0 a <http://schema.org/Person>}};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/source_to_domain_conversion_rule.n3>].
+
+<#lemma8> a r:Extraction; r:gives {<http://example.org/resource/Natperson/1001> natperson:gebdat "1990-02-08T00:00:00+01:00"^^xsd:dateTime};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/source_entity.ttl>].
+
+<#lemma9> a r:Extraction; r:gives {{?x0 patient:persnr ?x1.
+  ?x1 natperson:gebdat ?x2} => {?x0 <http://schema.org/birthDate> ?x2}};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/source_to_domain_conversion_rule.n3>].
+
+<#lemma10> a r:Extraction; r:gives {<http://example.org/resource/Natperson/1001> natperson:name "Healthcare"};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/source_entity.ttl>].
+
+<#lemma11> a r:Extraction; r:gives {{?x0 patient:persnr ?x1.
+  ?x1 natperson:name ?x2} => {?x0 <http://schema.org/familyName> ?x2}};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/source_to_domain_conversion_rule.n3>].
+
+#ENDS 0.058 [sec] IO=8/4 TC=4 TP=8 BC=0 BP=0 PM=0 CM=0 FM=0 AM=0
+
