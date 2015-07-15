@@ -1,0 +1,55 @@
+#Processed by Id: euler.yap 8028 2015-05-07 09:13:19Z josd
+#eye domain_entity.ttl domain_to_OMOP_conversion_rule.n3 --query domain_to_OMOP_query_rule.n3q
+
+PREFIX patient: <http://www.agfa.com/orbis-schema/Patient#>
+PREFIX natperson: <http://www.agfa.com/orbis-schema/Natperson#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://schema.org/>
+PREFIX func: <http://www.w3.org/2007/rif-builtin-function#>
+PREFIX omop: <http://www.salusproject.eu/ontology/omop#>
+PREFIX log: <http://www.w3.org/2000/10/swap/log#>
+PREFIX r: <http://www.w3.org/2000/10/swap/reason#>
+
+[ a r:Proof, r:Conjunction;
+  r:component <#lemma1>;
+  r:gives {
+    <http://example.org/resource/Patient/1001> omop:yearOfBirth 1990 .
+    <http://example.org/resource/Patient/1001> omop:monthOfBirth 2 .
+    <http://example.org/resource/Patient/1001> omop:dayOfBirth 8 .
+  }].
+
+<#lemma1> a r:Inference; r:gives {<http://example.org/resource/Patient/1001> omop:yearOfBirth 1990 .
+  <http://example.org/resource/Patient/1001> omop:monthOfBirth 2 .
+  <http://example.org/resource/Patient/1001> omop:dayOfBirth 8}; r:evidence (
+  <#lemma2>);
+  r:rule <#lemma3>.
+
+<#lemma2> a r:Inference; r:gives {<http://example.org/resource/Patient/1001> omop:yearOfBirth 1990 .
+  <http://example.org/resource/Patient/1001> omop:monthOfBirth 2 .
+  <http://example.org/resource/Patient/1001> omop:dayOfBirth 8}; r:evidence (
+  <#lemma4>
+  [ a r:Fact; r:gives {("1990-02-08T00:00:00+01:00"^^xsd:dateTime) func:year-from-dateTime 1990}]
+  [ a r:Fact; r:gives {("1990-02-08T00:00:00+01:00"^^xsd:dateTime) func:month-from-dateTime 2}]
+  [ a r:Fact; r:gives {("1990-02-08T00:00:00+01:00"^^xsd:dateTime) func:day-from-dateTime 8}]);
+  r:rule <#lemma5>.
+
+<#lemma3> a r:Extraction; r:gives {{?x0 omop:yearOfBirth ?x1.
+  ?x0 omop:monthOfBirth ?x2.
+  ?x0 omop:dayOfBirth ?x3} => {?x0 omop:yearOfBirth ?x1.
+  ?x0 omop:monthOfBirth ?x2.
+  ?x0 omop:dayOfBirth ?x3}};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/domain_to_omop_query_rule.n3q>].
+
+<#lemma4> a r:Extraction; r:gives {<http://example.org/resource/Patient/1001> <http://schema.org/birthDate> "1990-02-08T00:00:00+01:00"^^xsd:dateTime};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/domain_entity.ttl>].
+
+<#lemma5> a r:Extraction; r:gives {{?x0 <http://schema.org/birthDate> ?x1.
+  (?x1) func:year-from-dateTime ?x2.
+  (?x1) func:month-from-dateTime ?x3.
+  (?x1) func:day-from-dateTime ?x4} => {?x0 omop:yearOfBirth ?x2.
+  ?x0 omop:monthOfBirth ?x3.
+  ?x0 omop:dayOfBirth ?x4}};
+  r:because [ a r:Parsing; r:source <file:///d:/jbi-sample-rule/domain_to_omop_conversion_rule.n3>].
+
+#ENDS 0.069 [sec] IO=6/3 TC=2 TP=4 BC=0 BP=0 PM=0 CM=0 FM=0 AM=0
+
