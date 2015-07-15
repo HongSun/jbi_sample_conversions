@@ -1,0 +1,12 @@
+PREFIX schema: <http://schema.org/>
+PREFIX func: <http://www.w3.org/2007/rif-builtin-function#>
+PREFIX omop: <http://www.salusproject.eu/ontology/omop#>
+PREFIX log: <http://www.w3.org/2000/10/swap/log#>
+  {	?person schema:birthDate ?birthdate.
+	(?birthdate) func:year-from-dateTime ?yearOfBirth.
+	(?birthdate) func:month-from-dateTime ?monthOfBirth.
+	(?birthdate) func:day-from-dateTime ?dayOfBirth.
+  } => {
+	?person omop:yearOfBirth ?yearOfBirth.
+	?person omop:monthOfBirth ?monthOfBirth.
+	?person omop:dayOfBirth ?dayOfBirth. }.
